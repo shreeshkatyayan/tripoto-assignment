@@ -9,6 +9,12 @@ a{
 	color: inherit;
 	cursor: pointer;
 }
+
+.hidden{
+	display: none !important;
+	visibility: hidden !important;
+}
+
 .container {
 	position: relative;
 	display: block;

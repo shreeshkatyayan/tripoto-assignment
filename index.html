@@ -17,94 +17,75 @@
 	<title>Tripoto Comment Assignment</title>
 	
 	<link rel="shortcut icon" href="favicon.ico">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Roboto:400,700,300,300italic,400italic,700italic" rel="stylesheet" />
-	<link rel="stylesheet" type="text/css" href="css/reset.css" />
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-<body>
+<body ng-app="commentApp">
 	<!--Container open-->
-	<div class="container">
-		<form>
-			<input type="text" placeholder="Write a comment..."></input>
+	<div class="container" ng-controller="commentController">
+		<form id="new-comment" ng-submit="insertComment()">
+			<input type="text" placeholder="Write a comment..." ng-model="new_comment" />
 		</form>
-		<!--Comment open-->
 		<ul class="comment">
-			<!--Comment list open-->
-			<li class="comment-list">
-				<!--Header open-->
+			<li class="comment-list" ng-repeat="comment in comments">
 				<header>
-					<a href="#!" class="comment-author"><img src="http://placehold.it/100" class="avatar">Shreesh Katyayan</a>
-					<div class="option">
+					<a href="#!" class="comment-author">
+						<img ng-src="{{ comment.avatar_url }}" class="avatar">{{ comment.name }}
+					</a>
+					<div class="option" ng-show="isAuthor(comment.userID)">
 						<i class="material-icons">settings</i>
 						<ul>
-							<li>Edit</li>
-							<li>Delete</li>
+							<a ng-click="comment.edit = true"><li>Edit</li></a>
+							<a ng-click="deleteComment(comment.commentID)"><li>Delete</li></a>
 						</ul>
 					</div>
-				<!--Header close-->
 				</header>
-				<!--Comment body open-->
 				<div class="comment-body">
-					<p class="says">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
-					<!--<img src="http://placehold.it/1200x600" class="photo">-->
-				<!--Comment body close-->
-				</div>
-				<!--Footer open-->
-				<footer>
-					<a href="#!" class="like">Likes <span class="badge">(21)</span></a>
-					<a class='no-url' onclick="show_reply_field()">Reply</a>
-					<form class="reply-form">
-						<input type="text" placeholder="Reply to a comment..."></input>
+					<p class="says" ng-if="!comment.edit">{{ comment.says }}</p>
+					<form class="reply-form active" ng-submit="editComment(comment.commentID)" ng-if="comment.edit">
+						<input type="text" placeholder="{{ comment.says }}" ng-model="comments.edit_comment" />
 					</form>
-				<!--Footer close-->
+				</div>
+				<footer>
+					<a ng-click="isCommentLiked(comment.commentID)" class="liked">Like <span class="badge" ng-show="comment.like_status">{{ comment.likes }}</span></a>
+					<a class="no-url" ng-click="comment.add_reply = true">Reply</a>
+					<form class="reply-form active" ng-submit="insertReply(comment.commentID)" ng-if="comment.add_reply">
+						<input type="text" placeholder="Reply to a comment..." ng-model="comments.new_reply" />
+					</form>
 				</footer>
-				<!--Replies section open-->
-				<div class="replies">
+				<div ng-show="hasReplies(comment.commentID)" class="replies">
 					<ul class="comment">
-						<!--Comment list open-->
-						<li class="comment-list">
-							<!--Header open-->
+						<li class="comment-list" ng-repeat="reply in comment.replies">
 							<header>
-								<a href="#!" class="comment-author"><img src="http://placehold.it/100" class="avatar">Shreesh Katyayan</a>
-								<div class="option">
+								<a href="#!" class="comment-author">
+									<img ng-src="{{ reply.avatar_url }}" class="avatar">{{ reply.name }}
+								</a>
+								<div class="option" ng-show="isAuthor(reply.userID)">
 									<i class="material-icons">settings</i>
 									<ul>
-										<a href=""><li>Edit</li></a>
-										<a href=""><li>Delete</li></a>
+										<a ng-click="reply.edit = true"><li>Edit</li></a>
+										<a ng-click="deleteReply(comment.commentID, reply.replyID)"><li>Delete</li></a>
 									</ul>
 								</div>
-							<!--Header close-->
 							</header>
-							<!--Comment body open-->
 							<div class="comment-body">
-								<p class="says">Thank you</p>
-								<!--<img src="http://placehold.it/1200x600" class="photo">-->
-							<!--Comment body close-->
+								<p class="says" ng-if="!reply.edit">{{ reply.says }}</p>
+								<form class="reply-form active" ng-submit="editReply(comment.commentID, reply.replyID)" ng-if="reply.edit">
+									<input type="text" placeholder="{{ reply.says }}" ng-model="comments.replies.edit_reply" />
+								</form>
 							</div>
-							<!--Footer open-->
 							<footer>
-								<a href="#!" class="like">Likes <span class="badge">(21)</span></a>
-							<!--Footer close-->
+								<a ng-click="isReplyLiked(comment.commentID, reply.replyID)" class="liked">Like <span class="badge" ng-show="reply.like_status">{{ reply.likes }}</span></a>
 							</footer>
-						<!--Comment list close-->
 						</li>
-					<!--Comment close-->
 					</ul>
-				<!--Replies section closed-->
 				</div>
-			<!--Comment list close-->
 			</li>
-		<!--Comment close-->
 		</ul>
 	<!--Container close-->
 	</div>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$(".no-url").on('click', function(){
-				$(this).parent().children('.reply-form').addClass('active');
-			});
-		});
-	</script>
 </body>
 </html>
