@@ -1,91 +1,94 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta http-equiv="cache-control" content="max-age=0" />
-	<meta http-equiv="cache-control" content="no-cache" />
-	<meta http-equiv="expires" content="0" />
-	<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
-	<meta http-equiv="pragma" content="no-cache" />
+	<head>
+		<meta http-equiv="cache-control" content="max-age=0" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+		<meta http-equiv="pragma" content="no-cache" />
 
-	<meta charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	<meta name="author" content="Shreesh Katyayan" />
-	
-	<title>Tripoto Comment Assignment</title>
-	
-	<link rel="shortcut icon" href="favicon.ico">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-	<script type="text/javascript" src="js/script.js"></script>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Roboto:400,700,300,300italic,400italic,700italic" rel="stylesheet" />
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-</head>
-<body ng-app="commentApp">
-	<!--Container open-->
-	<div class="container" ng-controller="commentController">
-		<form id="new-comment" ng-submit="insertComment()">
-			<input type="text" placeholder="Write a comment..." ng-model="new_comment" />
-		</form>
-		<ul class="comment">
-			<li class="comment-list" ng-repeat="comment in comments">
-				<header>
-					<a href="#!" class="comment-author">
-						<img ng-src="{{ comment.avatar_url }}" class="avatar">{{ comment.name }}
-					</a>
-					<div class="option" ng-show="isAuthor(comment.userID)">
-						<i class="material-icons">settings</i>
-						<ul>
-							<a ng-click="comment.edit = true"><li>Edit</li></a>
-							<a ng-click="deleteComment(comment.commentID)"><li>Delete</li></a>
-						</ul>
-					</div>
-				</header>
-				<div class="comment-body">
-					<p class="says" ng-if="!comment.edit">{{ comment.says }}</p>
-					<form class="reply-form active" ng-submit="editComment(comment.commentID)" ng-if="comment.edit">
-						<input type="text" placeholder="{{ comment.says }}" ng-model="comments.edit_comment" />
-					</form>
-				</div>
-				<footer>
-					<a ng-click="isCommentLiked(comment.commentID)" class="liked">Like <span class="badge" ng-show="comment.like_status">{{ comment.likes }}</span></a>
-					<a class="no-url" ng-click="comment.add_reply = true">Reply</a>
-					<form class="reply-form active" ng-submit="insertReply(comment.commentID)" ng-if="comment.add_reply">
-						<input type="text" placeholder="Reply to a comment..." ng-model="comments.new_reply" />
-					</form>
-				</footer>
-				<div ng-show="hasReplies(comment.commentID)" class="replies">
-					<ul class="comment">
-						<li class="comment-list" ng-repeat="reply in comment.replies">
-							<header>
-								<a href="#!" class="comment-author">
-									<img ng-src="{{ reply.avatar_url }}" class="avatar">{{ reply.name }}
-								</a>
-								<div class="option" ng-show="isAuthor(reply.userID)">
-									<i class="material-icons">settings</i>
-									<ul>
-										<a ng-click="reply.edit = true"><li>Edit</li></a>
-										<a ng-click="deleteReply(comment.commentID, reply.replyID)"><li>Delete</li></a>
-									</ul>
-								</div>
-							</header>
-							<div class="comment-body">
-								<p class="says" ng-if="!reply.edit">{{ reply.says }}</p>
-								<form class="reply-form active" ng-submit="editReply(comment.commentID, reply.replyID)" ng-if="reply.edit">
-									<input type="text" placeholder="{{ reply.says }}" ng-model="comments.replies.edit_reply" />
-								</form>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta name="author" content="Shreesh Katyayan" />
+		
+		<title>Tripoto Comment Assignment</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Roboto:400,700,300,300italic,400italic,700italic" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+	</head>
+	<body ng-app="commentApp">
+		<div class="comment-container" ng-controller="commentController">
+			<form id="new-comment" class="theme dark" ng-submit="insertComment()">
+				<textarea placeholder="What do you want to say?" ng-model="new_comment" value=""></textarea>
+				<input type="submit" value="Comment"></input>
+			</form>
+			<ul class="comment">
+				<li class="comment-list" ng-repeat="comment in comments">
+					<header>
+						<div class="comment-author">
+							<div class="right dropdown" ng-show="isAuthor(comment.userID)">
+								<i class="material-icons">keyboard_arrow_down</i>
+								<ul>
+									<a href="" ng-click="comment.edit = true"><li>Edit</li></a>
+									<a href="" ng-click="deleteComment(comment.commentID)"><li>Delete</li></a>
+								</ul>
 							</div>
-							<footer>
-								<a ng-click="isReplyLiked(comment.commentID, reply.replyID)" class="liked">Like <span class="badge" ng-show="reply.like_status">{{ reply.likes }}</span></a>
-							</footer>
-						</li>
-					</ul>
-				</div>
-			</li>
-		</ul>
-	<!--Container close-->
-	</div>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-</body>
+							<a href="" class="comment-author">
+								<img ng-src="{{ comment.avatar_url }}" class="avatar"> <span class="author-name">{{ comment.name }}</span>
+							</a> commented
+						</div>
+						<div class="comment-option">
+							<a href="" ng-click="isCommentLiked(comment.commentID)"><span ng-show="comment.like_status">{{ comment.likes }}</span> Like</a>
+							<a href="" ng-click="comment.add_reply = true">Reply</a>
+						</div>
+					</header>
+					<article>
+						<p ng-if="!comment.edit">{{comment.says}}</p>
+						<form class="theme dark edit" ng-if="comment.edit" ng-submit="editComment(comment.commentID)">
+							<textarea placeholder="Oh snap! Correct your error." ng-model="comments.edit_comment">{{ comment.says }}</textarea>
+							<input type="submit" value="EDIT"></input>
+						</form>
+						<form class="theme-dark reply" ng-if="comment.add_reply" ng-submit="insertReply(comment.commentID)">
+							<input type="text" placeholder="Itching to reply? Click here" ng-model="comments.new_reply">
+						</form>
+					</article>
+					<footer>
+						<ul class="comment reply">
+							<li class="comment-list" ng-repeat="reply in comment.replies">
+								<header>
+									<div class="comment-author">
+										<div class="right dropdown" ng-show="isAuthor(reply.userID)">
+											<i class="material-icons">keyboard_arrow_down</i>
+											<ul>
+												<a href="" ng-click="reply.edit = true"><li>Edit</li></a>
+												<a href="" ng-click="deleteReply(comment.commentID, reply.replyID)"><li>Delete</li></a>
+											</ul>
+										</div>
+										<a href="" class="comment-author">
+											<img ng-src="{{ reply.avatar_url }}" class="avatar"> <span class="author-name">{{ reply.name }}</span>
+										</a> commented
+									</div>
+									<div class="comment-option">
+										<a href="" ng-click="isReplyLiked(comment.commentID, reply.replyID)"><span ng-show="reply.like_status">{{ reply.likes }}</span> Like</a>
+									</div>
+								</header>
+								<article>
+									<p ng-if="!reply.edit">{{reply.says}}</p>
+									<form class="theme dark edit" ng-if="reply.edit" ng-submit="editReply(comment.commentID, reply.replyID)">
+										<textarea placeholder="Oh snap! Correct your error." ng-model="comments.replies.edit_reply">{{ comment.says }}</textarea>
+										<input type="submit" value="EDIT"></input>
+									</form>
+								</article>
+							</li>
+						</ul>
+					</footer>
+				</li>
+			</ul>
+		</div>
+	</body>
 </html>

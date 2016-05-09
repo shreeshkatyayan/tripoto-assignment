@@ -49,6 +49,10 @@ commentApp.controller('commentController', function($scope){
 		$scope.comments = data;
 	});*/
 	$scope.comments = comment_test;
+	$scope.new_comment = "";
+	$scope.comments.edit_comment = "";
+	$scope.comments.new_reply = "";
+	$scope.comments.edit_reply = "";
 	//
 	$scope.isAuthor = function(user_id){
 		if (user_id === user.user_id) {
@@ -100,29 +104,36 @@ commentApp.controller('commentController', function($scope){
 			}
 		}
 	}
-
 	$scope.insertComment = function(){
-		var new_comment_id = $scope.comments[$scope.comments.length - 1].commentID +1;
-		var input = {
-			"commentID"	: new_comment_id,
-			"userID": user.user_id,
-			"name": user.user_name,
-			"avatar_url": user.avatar,
-			"says": $scope.new_comment,
-			"likes": 0,
-			"like_status": false,
-			"replies": [] 
-		};
-		//Pushes changes to the global comment object
-		$scope.comments.push(input);
-		$scope.new_comment = '';
+		if ($scope.new_comment.length < 1) {
+			alert("This comment seems to be blank. Please write something.");
+		} else {
+			var new_comment_id = $scope.comments[$scope.comments.length - 1].commentID +1;
+			var input = {
+				"commentID"	: new_comment_id,
+				"userID": user.user_id,
+				"name": user.user_name,
+				"avatar_url": user.avatar,
+				"says": $scope.new_comment,
+				"likes": 0,
+				"like_status": false,
+				"replies": [] 
+			};
+			//Pushes changes to the global comment object
+			$scope.comments.push(input);
+			$scope.new_comment = '';
+		}
 	}
 
 	$scope.editComment = function(c_id){
-		var index = $scope.findCommentIndex(c_id);
-		$this = $scope.comments[index];
-		$this["says"] = $scope.comments.edit_comment;
-		$this.edit = false;
+		if ($scope.comments.edit_comment.length < 1) {
+			alert("This comment seems to be blank. Please write something.");
+		} else {
+			var index = $scope.findCommentIndex(c_id);
+			$this = $scope.comments[index];
+			$this["says"] = $scope.comments.edit_comment;
+			$this.edit = false;
+		}
 	}
 	
 	$scope.deleteComment = function(c_id){
@@ -131,35 +142,44 @@ commentApp.controller('commentController', function($scope){
 	}
 
 	$scope.insertReply = function(c_id){
-		var index = $scope.findCommentIndex(c_id);
-		var new_reply_id;
-		$this = $scope.comments[index];
-		if ($scope.hasReplies(c_id)) {
-			new_reply_id = $this.replies[$this.replies.length - 1].replyID + 1;
+		if ($scope.comments.new_reply < 1) {
+			alert("This reply seems to be blank. Please write something");
 		} else {
-			new_reply_id = 1;
+			var index = $scope.findCommentIndex(c_id);
+			var new_reply_id;
+			$this = $scope.comments[index];
+			if ($scope.hasReplies(c_id)) {
+				new_reply_id = $this.replies[$this.replies.length - 1].replyID + 1;
+			} else {
+				new_reply_id = 1;
+			}
+			var input = {
+				"replyID"	: new_reply_id,
+				"userID": user.user_id,
+				"name": user.user_name,
+				"avatar_url": user.avatar,
+				"says": $scope.comments.new_reply,
+				"likes": 0,
+				"like_status": false,
+			};
+			$this.replies.push(input);
+			$this.add_reply = false;
+			$scope.comments.new_reply = '';
 		}
-		var input = {
-			"replyID"	: new_reply_id,
-			"userID": user.user_id,
-			"name": user.user_name,
-			"avatar_url": user.avatar,
-			"says": $scope.comments.new_reply,
-			"likes": 0,
-			"like_status": false,
-		};
-		$this.replies.push(input);
-		$scope.comments.new_reply = '';
 	}
 	
 	$scope.editReply = function(c_id, r_id){
-		if($scope.hasReplies(c_id)){
-			var index1 = $scope.findCommentIndex(c_id);
-			$this = $scope.comments[index1];
-			var index2 = $scope.findReplyIndex(c_id, r_id);
-			$this = $this.replies[index2];
-			$this["says"] = $scope.comments.replies.edit_reply;
-			$this.edit = false;
+		if ($scope.comments.replies.edit_reply.length < 1) {
+			alert("This reply seems to be blank. Please write something.")
+		} else {
+			if($scope.hasReplies(c_id)) {
+				var index1 = $scope.findCommentIndex(c_id);
+				$this = $scope.comments[index1];
+				var index2 = $scope.findReplyIndex(c_id, r_id);
+				$this = $this.replies[index2];
+				$this["says"] = $scope.comments.replies.edit_reply;
+				$this.edit = false;
+			}
 		}
 	}
 

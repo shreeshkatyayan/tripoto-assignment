@@ -1,129 +1,182 @@
 *{
 	margin: 0;
 	padding: 0;
-	font-family: "Roboto", sans-serif;
-	font-weight: 300;
-}
-a{
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: "Lato", sans-serif;
+	font-size: 14px;
+	transition: all 0.2s ease-in;
 	text-decoration: none;
 	color: inherit;
-	cursor: pointer;
 }
-
-.hidden{
-	display: none !important;
-	visibility: hidden !important;
-}
-
-.container {
+.dark-grey{
+	background-color: #050E0F !important;}
+	.dark-grey-text{
+	color: #050E0F !important;}
+.white{
+	background-color: #EEF6E4 !important;}
+	.white-text{
+	color: #EEF6E4 !important;}
+.red{
+	background-color: #FF3D33 !important;}
+	.red-text{
+		color: #FF3D33 !important;}
+.comment-container{
 	position: relative;
-	display: block;
-	width: 700px;
-	height: auto;
+	width: 600px;
+	max-width: 90%;
+	background-color: rgba(0, 0, 0, 0.1);
 	margin: 0 auto;
-	box-sizing: border-box;
-	background-color: rgba(50,50,50,0.05);
-	padding: 1em 3em;
+	padding: 20px;
+	box-shadow: 0 10px 6px -6px #777;
 }
-.comment {
+form > *{
+	margin: 10px 0;
+}
+
+div.seperator{
+	height: 1px;
+	width: 100%;
+	margin-top: 10px;
+	background-color: rgba(0, 0, 0, 0.1);}
+.left{
+	float: left;}
+.right{
+	float: right;}
+
+/*Reusable minimal textarea*/
+textarea{
+	width: 100%;
+	line-height: 20px;
+	vertical-align: top;
+	height: 42px;
+	padding: 10px;
+	background-color: #fff;
+	overflow: hidden;
+	transition-delay: 0.5s;
+	animation: drop-down 0.5s ease-in;
+	border: none;
+	resize: none;}
+	.theme.dark textarea{
+		color: rgba(5, 14, 15, 0.6);}
+	textarea:focus{
+		transition-delay: 0s;
+		height: 80px;}
+/*Reusable input text field*/
+input[type="text"]{
+	width: 100%;
+	line-height: 20px;
+	padding: 10px;
+	background-color: #FFF;
+	animation: drop-down 0.5s ease-in;
+	border: none;}
+	.theme.dark input[type="text"]{
+		color: rgba(5, 14, 15, 0.6);}
+
+/*Reusable 3D submit button*/
+input[type="submit"]{
+	font-size: 12px;
+	padding: 10px 30px;
+	text-transform: uppercase;
+	cursor: pointer;
+	position: relative;
+	outline: none;
+	border: none;
+	color: #FFF;
+	transition: none;
+	border-radius: 5px;
+	box-shadow: 0 3px #316BE7;
+	background-color: #477EFF;}
+	input[type="submit"]:hover{
+		top: 1px;
+		box-shadow: 0 2px #316BE7;}
+	input[type="submit"]:active{
+		top: 3px;
+		box-shadow: 0 0;
+	}
+
+.comment{
 	display: block;
 	width: 100%;
-	list-style: none;
-}
-	.comment .comment-list {
+	clear: both;
+	list-style: none;}
+	.comment .comment-list{
 		display: block;
-		animation: fade-in 1s ease-in;
-	}
-		.comment-list > *{
-			margin: 10px 0;
+		padding-bottom: 5px;
+		animation: fade-in 1s ease-in;}
+		.comment-list:last-child{
+			border: none;
 		}
+		.comment .comment-list > *{
+			color: rgba(5, 14, 15, 0.5);
+			margin: 10px 0;}
 		.comment-list header{
-			width: 100%;
-		}
-			.comment-list header > a.comment-author {
-				display: inline-block;
-				float: left;
-				font-size: 16px;
-				line-height: 32px;
-				font-weight: 700 !important;
-			}
-				.comment-list header > a.comment-author .avatar{
-					vertical-align: middle;
-					display: inline-block;
-					height: 32px;
-					width: 32px;
-					border-radius: 16px;
-					margin-right: 10px;
-				}
-			.comment-list header > .option {
-				position: relative;
-				display: inline-block;
-				float: right;}
-				.comment-list header > .option i.material-icons {
-					cursor: pointer;
-					font-size: 16px;
-					line-height: 32px;}
-				.comment-list header > .option ul {
-					display: none;
+			position: relative;
+			width: 100%;}
+				.comment-author .avatar{
+					width: 80px;
+					float: left;
+					vertical-align: text-top;
+					margin-right: 20px;}
+				.comment-author span.author-name{
+					font-weight: 700;}
+					.comment-author span.author-name:hover{
+						color: rgba(5, 14, 15, 0.8);}
+				.comment-author .dropdown ul{
 					list-style: none;
 					position: absolute;
 					right: -10px;
-					top: 32px;
-					width: 120px;
 					z-index: 2;
-					background-color: rgb(255,255,255);}
-					.comment-list header > .option ul li {
-						padding: 5px 15px;
+					display: none;
+					box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+					width: 100px;}
+					.dropdown i{
+						cursor: pointer;
 					}
-				.comment-list header > .option:hover ul {
-					animation: drop-down 0.2s ease-out;
-					display: block;}
-		.comment-list .comment-body, .comment-list footer{
-			margin-left: 42px;
+					.dropdown ul li{
+						padding: 5px;
+						font-size: 12px;
+						background-color: #fff;}
+					.dropdown:hover ul{
+						display: block;
+						animation: drop-down 0.2s ease-out;}
+						.dropdown ul li:hover{
+							background-color: #eee;
+						}
+			.comment-option{
+				margin-top: 10px;}
+				.comment-option a{
+					font-size: 12px;
+					font-weight: 700;
+					margin-right:15px;}
+					.comment-option a:hover{
+						color: rgba(5, 14, 15, 0.8);}
+		.comment-list article{
+			display: block;
+			position: relative;
+			margin-left: 100px !important;}
+		.comment-list footer{
+			display: block;
+			position: relative;
+			margin-left: 50px !important;
+			padding-left: 10px;
+			padding-top: 10px;
 		}
-			.comment-list .comment-body img.photo{
-				position: relative;
-				left: 50%;
-				width: 75%;
-				height: auto;
-				transform: translateX(-50%);
-				margin-top: 20px;}
-		.comment-list footer {
-			padding-bottom: 10px;
-			border-bottom: solid 1px rgba(0,0,0,0.1);
+@media only screen and (max-width: 768px){
+	.comment-author{
+		clear: both;}
+		.comment-author .avatar{
+			width: 64px;
 		}
-		.comment-list footer > a {
-			margin-right: 20px;
-			font-weight: 400;
-			font-size: 12px;}
-		.comment-list .replies {
-			margin-left: 42px;
-		}
-/**Comment response form style**/
-form {
-	margin-top: 15px;
-	width: 100%;}
-form.reply-form{
-	display: none;
+	.comment-list article{
+		clear: both;
+		padding-top: 10px;
+		margin-left: 0 !important;
+	}
+	.comment-list footer{
+		margin-left: 20px !important;}
 }
-form.reply-form.active{
-	display: block;
-	animation: drop-down 0.3s ease-in;
-}
-	form input[type="text"]{
-		width: 100%;
-		padding: 10px 10px 10px 5px;
-		box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06), 0 2px 10px 0 rgba(0, 0, 0, 0.02);
-		border: none;}
 
-/*Clearfix*/
-.comment-list:before, .comment-list:after, .comment-list header:before, .comment-list header:after{
-	content: "";
-	display: table;}
-.comment-list:after, .comment-list header:after{
-	clear: both !important;}
-
-/* Custom dropdown animation */
 @-webkit-keyframes drop-down{
 	from {
 		opacity: 0.5;
