@@ -169,7 +169,7 @@ commentApp.controller('commentController', function($scope){
 	}
 	
 	$scope.editReply = function(c_id, r_id){
-		if ($scope.comments.replies.edit_reply.length < 1) {
+		if ($scope.comments.edit_reply.length < 1) {
 			alert("This reply seems to be blank. Please write something.")
 		} else {
 			if($scope.hasReplies(c_id)) {
@@ -177,7 +177,7 @@ commentApp.controller('commentController', function($scope){
 				$this = $scope.comments[index1];
 				var index2 = $scope.findReplyIndex(c_id, r_id);
 				$this = $this.replies[index2];
-				$this["says"] = $scope.comments.replies.edit_reply;
+				$this["says"] = $scope.comments.edit_reply;
 				$this.edit = false;
 			}
 		}

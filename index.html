@@ -80,7 +80,7 @@
 								<article>
 									<p ng-if="!reply.edit">{{reply.says}}</p>
 									<form class="theme dark edit" ng-if="reply.edit" ng-submit="editReply(comment.commentID, reply.replyID)">
-										<textarea placeholder="Oh snap! Correct your error." ng-model="comments.replies.edit_reply">{{ comment.says }}</textarea>
+										<textarea placeholder="Oh snap! Correct your error." ng-model="comments.edit_reply">{{ comment.says }}</textarea>
 										<input type="submit" value="EDIT"></input>
 									</form>
 								</article>
