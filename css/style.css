@@ -155,6 +155,11 @@ input[type="submit"]{
 			display: block;
 			position: relative;
 			margin-left: 100px !important;}
+			.comment-list article p{
+				word-wrap: break-word;
+				block: inline;
+				white-space: pre-line;
+			}
 		.comment-list footer{
 			display: block;
 			position: relative;

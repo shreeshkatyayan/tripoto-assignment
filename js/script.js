@@ -8,7 +8,7 @@ window.comment_test = [{
 	"edit"			:	false,
 	"says"			:	"Hi this is first element",
 	"likes"			:	21,
-	"like_status"	: 	true,
+	"like_status"	: 	false,
 	"replies"		:	[{
 		"replyID"		:	1,
 		"userID"		:	"obama",
@@ -17,7 +17,7 @@ window.comment_test = [{
 		"edit"			:	false,
 		"says"			:	"Thank you",
 		"likes"			:	5,
-		"like_status"	: 	true
+		"like_status"	: 	false
 	},
 	{
 		"replyID"		:	2,
@@ -38,7 +38,7 @@ window.comment_test = [{
 	"edit"			:	false,
 	"says"			:	"Hi this is second element",
 	"likes"			:	11,
-	"like_status"	: 	true,
+	"like_status"	: 	false,
 	"replies"		:	[]
 }];
 

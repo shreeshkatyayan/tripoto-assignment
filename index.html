@@ -43,7 +43,7 @@
 							</a> commented
 						</div>
 						<div class="comment-option">
-							<a href="" ng-click="isCommentLiked(comment.commentID)"><span ng-show="comment.like_status">{{ comment.likes }}</span> Like</a>
+							<a href="" ng-click="isCommentLiked(comment.commentID)"><span>{{ comment.likes }}</span> Likes</a>
 							<a href="" ng-click="comment.add_reply = true">Reply</a>
 						</div>
 					</header>
@@ -54,7 +54,8 @@
 							<input type="submit" value="EDIT"></input>
 						</form>
 						<form class="theme-dark reply" ng-if="comment.add_reply" ng-submit="insertReply(comment.commentID)">
-							<input type="text" placeholder="Itching to reply? Click here" ng-model="comments.new_reply">
+							<textarea placeholder="What do you want to say?" ng-model="comments.new_reply" value=""></textarea>
+							<input type="submit" value="Reply"></input>
 						</form>
 					</article>
 					<footer>
@@ -74,7 +75,7 @@
 										</a> commented
 									</div>
 									<div class="comment-option">
-										<a href="" ng-click="isReplyLiked(comment.commentID, reply.replyID)"><span ng-show="reply.like_status">{{ reply.likes }}</span> Like</a>
+										<a href="" ng-click="isReplyLiked(comment.commentID, reply.replyID)"><span>{{ reply.likes }}</span> Likes</a>
 									</div>
 								</header>
 								<article>
